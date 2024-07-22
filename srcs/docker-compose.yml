@@ -2,17 +2,16 @@ version: '3.8'
 
   nginx:
     container_name: nginx
-    image: nginx
     networks:
       - inception
     build:
       context: .
       dockerfile: requirements/nginx/Dockerfile
     ports:
-      - 443:443
+      - "443:443"
     volumes:
       - wordpress:/var/www/
-    restart: unless-stopped
+    restart: always
     depends_on:
       - wordpress
 
