@@ -13,7 +13,7 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
     -subj "/C=DE/ST=BW/L=HN/O=42School/OU=42HN/CN=adhaka/"
 
 # Copying custom nginx configuration file
-COPY ./requirements/nginx/conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./requirements/nginx/conf/nginx.conf /etc/nginx/http.d/nginx.conf
 
 # Exposing port 443 for HTTPS
 EXPOSE 443
