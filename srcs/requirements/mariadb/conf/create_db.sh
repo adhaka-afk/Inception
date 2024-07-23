@@ -9,7 +9,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     fi
 fi
 
-if [ ! -d "/var/lib/mysql/wordpress" ]; then
+if [ ! -d "/var/lib/mysql/${DB_NAME}" ]; then
     cat << EOF > /tmp/create_db.sql
 USE mysql;
 FLUSH PRIVILEGES;
