@@ -23,9 +23,12 @@ RUN apk update && apk upgrade && apk add --no-cache \
     rm -f /var/cache/apk/*
 
 # Configuring PHP-FPM
-RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php/php-fpm.d/www.conf && \
-    sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php/php-fpm.d/www.conf && \
-    sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php/php-fpm.d/www.conf
+RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf && \
+    sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf && \
+    sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
+
+# Exposing the port
+EXPOSE 9000
 
 # Setting the working directory
 WORKDIR /var/www
@@ -42,4 +45,4 @@ RUN sh wp-config-create.sh && rm wp-config-create.sh && \
     chmod -R 0777 wp-content/
 
 # Starting PHP-FPM
-CMD ["/usr/sbin/php-fpm${PHP_VERSION}", "-F"]
+CMD ["/usr/sbin/php-fpm82", "-F"]

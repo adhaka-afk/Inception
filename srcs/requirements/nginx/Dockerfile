@@ -8,8 +8,8 @@ RUN apk update && \
 
 # Generating SSL certificates
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-    -out /etc/ssl/cf/adhaka.42.fr.crt \
-    -keyout /etc/ssl/pcf/adhaka.42.fr.key \
+    -out /etc/ssl/certs/adhaka.42.fr.crt \
+    -keyout /etc/ssl/private/adhaka.42.fr.key \
     -subj "/C=DE/ST=BW/L=HN/O=42School/OU=42HN/CN=adhaka/"
 
 # Copying custom nginx configuration file
