@@ -1,5 +1,6 @@
 version: '3.8'
 
+services:
   nginx:
     container_name: nginx
     networks:
@@ -15,6 +16,53 @@ version: '3.8'
     depends_on:
       - wordpress
 
+  mariadb:
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+        DB_ROOT_PASS: ${DB_ROOT_PASS}
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    networks:
+      - inception
+    volumes:
+      - db-volume:/var/lib/mysql
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: .
+      dockerfile: requirements/wordpress/Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+    volumes:
+      - wordpress:/var/www/
+    networks:
+      - inception
+    restart: always
+    depends_on:
+      - mariadb
+
+volumes:
+  wordpress:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/wordpress
+
+  mariadb:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/mariadb
 
 
 networks:
